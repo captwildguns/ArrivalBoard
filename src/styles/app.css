@@ -230,97 +230,6 @@ body {
   border-right: none;
 }
 
-.sidebar-section-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--forge-theme-text-low);
-  padding: 20px 16px 8px;
-}
-
-.school-list {
-  list-style: none;
-  flex: 1;
-}
-
-.school-list-item {
-  cursor: pointer;
-  transition: background 0.15s;
-  border-radius: 4px;
-  margin: 0 8px 2px;
-}
-
-.school-list-item:hover {
-  background: var(--forge-theme-surface-container);
-}
-
-.school-list-item.selected {
-  background: color-mix(in srgb, var(--forge-theme-primary) 12%, transparent);
-}
-
-.school-list-label {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 8px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.school-checkbox {
-  margin-top: 3px;
-  width: 16px;
-  height: 16px;
-  accent-color: var(--forge-theme-primary);
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.school-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.school-item-name {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--forge-theme-text-high);
-  line-height: 1.3;
-}
-
-.school-item-meta {
-  font-size: 11px;
-  color: var(--forge-theme-text-medium);
-}
-
-.sidebar-footer {
-  display: flex;
-  gap: 8px;
-  padding: 12px 16px 20px;
-  border-top: 1px solid var(--forge-theme-outline);
-  margin-top: 8px;
-}
-
-.sidebar-action-btn {
-  flex: 1;
-  padding: 6px 8px;
-  font-size: 12px;
-  font-family: inherit;
-  border: 1px solid var(--forge-theme-outline-medium);
-  background: transparent;
-  color: var(--forge-theme-primary);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.sidebar-action-btn:hover {
-  background: color-mix(in srgb, var(--forge-theme-primary) 8%, transparent);
-}
-
 /* ── Main Content ───────────────────────────────────────────────────── */
 .main-content {
   flex: 1;
@@ -1042,28 +951,145 @@ body {
 
 /* ── Sidebar school selector block ──────────────────────────────────── */
 .sidebar-school-selector {
-  padding: 12px 12px 0;
+  padding: 14px 12px 8px;
+  position: relative;
+  z-index: 200;
 }
 
-.sidebar-school-label {
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--forge-theme-text-low);
-  display: block;
-  margin-bottom: 4px;
-  padding-left: 4px;
+/* ── SchoolSelector component ───────────────────────────────────────── */
+.school-selector-root {
+  position: relative;
 }
 
-.sidebar-school-multi {
-  /* wrapper for the multi-school list */
+/* Collapsed input field */
+.school-selector-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--forge-theme-surface-container);
+  border: 1px solid rgba(123, 127, 196, 0.55);
+  border-radius: 4px;
+  padding: 9px 36px 9px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  user-select: none;
 }
 
-.sidebar-school-actions-row {
+.school-selector-input:hover,
+.school-selector-input.open {
+  border-color: #7b7fc4;
+}
+
+/* Floating "School" label on the border */
+.school-selector-floating-label {
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #7b7fc4;
+  background: var(--forge-theme-surface-container);
+  padding: 0 4px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.school-selector-value {
+  font-size: 14px;
+  color: var(--forge-theme-text-high);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.school-selector-arrow {
+  position: absolute;
+  right: 6px;
+  font-size: 20px !important;
+  color: var(--forge-theme-text-medium);
+  transition: transform 0.2s;
+  pointer-events: none;
+}
+
+.school-selector-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+/* Dropdown list */
+.school-selector-dropdown {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  background: #323245;
+  border: 1px solid rgba(123, 127, 196, 0.30);
+  border-radius: 4px;
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+/* Each school row */
+.school-selector-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 4px 6px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.school-selector-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.school-selector-item.selected {
+  background: rgba(123, 127, 196, 0.20);
+}
+
+.school-selector-item-name {
+  font-size: 13px;
+  color: var(--forge-theme-text-high);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 8px;
+}
+
+.school-selector-item.selected .school-selector-item-name {
+  color: #a0a4e8;
+}
+
+.school-selector-item-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.school-selector-count {
+  font-size: 12px;
+  color: var(--forge-theme-text-medium);
+  min-width: 16px;
+  text-align: right;
+}
+
+/* Active vehicle indicator circle */
+.school-selector-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #555;          /* gray when count = 0 */
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.school-selector-circle.active {
+  background: #4caf50;       /* green when count > 0 */
 }
 
 /* ── User Preferences Page ──────────────────────────────────────────── */

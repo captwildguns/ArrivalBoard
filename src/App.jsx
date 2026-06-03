@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import SchoolBoard from './components/SchoolBoard.jsx'
 import UserPreferencesPage from './components/UserPreferencesPage.jsx'
+import SchoolSelector from './components/SchoolSelector.jsx'
 import { schools, generateInitialBuses, simulateUpdate } from './data/sampleData.js'
 
 const NAV_LINKS = [
@@ -123,46 +124,12 @@ export default function App() {
 
           {/* School selector */}
           <div className="sidebar-school-selector">
-            <span className="sidebar-school-label">School</span>
-            <div className="sidebar-school-multi">
-              <div className="sidebar-school-actions-row">
-                <span className="sidebar-section-label" style={{padding: 0}}>Schools</span>
-                <div style={{display:'flex',gap:'2px'}}>
-                  <button className="sidebar-link-btn" onClick={() => setSelectedSchoolIds(schools.map(s => s.locationId))}>All</button>
-                  <span className="sidebar-sep">·</span>
-                  <button className="sidebar-link-btn" onClick={() => setSelectedSchoolIds([])}>None</button>
-                </div>
-              </div>
-              <ul className="school-list">
-                {schools.map(school => {
-                  const isSelected = selectedSchoolIds.includes(school.locationId)
-                  const count = school.activeVehicleCount ?? 0
-                  return (
-                    <li
-                      key={school.locationId}
-                      className={`school-list-item${isSelected ? ' selected' : ''}`}
-                      onClick={() => toggleSchool(school.locationId)}
-                    >
-                      <label className="school-list-label">
-                        <input
-                          type="checkbox"
-                          className="school-checkbox"
-                          checked={isSelected}
-                          onChange={() => toggleSchool(school.locationId)}
-                          onClick={e => e.stopPropagation()}
-                        />
-                        <div className="school-info">
-                          <span className="school-item-name">
-                            {school.schoolName}
-                            <span className="school-vehicle-count"> ({count})</span>
-                          </span>
-                        </div>
-                      </label>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
+            <SchoolSelector
+              schools={schools}
+              selectedIds={selectedSchoolIds}
+              onChange={setSelectedSchoolIds}
+              buses={buses}
+            />
           </div>
 
           {/* Nav links */}
