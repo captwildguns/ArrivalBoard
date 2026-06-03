@@ -1625,6 +1625,203 @@ body {
   line-height: 1.4;
 }
 
+/* ── Map Page ───────────────────────────────────────────────────────── */
+.map-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.map-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px 24px;
+  flex-shrink: 0;
+}
+
+.map-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--forge-theme-text-high);
+}
+
+.map-filter-btn {
+  color: var(--forge-theme-text-medium) !important;
+}
+
+/* Green connection banner */
+.map-connection-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #1b5e20;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.map-banner-icon {
+  font-size: 20px !important;
+}
+
+/* Map + sidebar split */
+.map-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.map-canvas {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Override Leaflet popup for dark theme */
+.leaflet-popup-content-wrapper {
+  background: #2d2d2d;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+}
+.leaflet-popup-tip { background: #2d2d2d; }
+.leaflet-popup-content { color: #fff; font-size: 13px; }
+.leaflet-popup-close-button { color: #aaa !important; }
+
+/* Vehicle locator sidebar */
+.map-sidebar {
+  width: 340px;
+  flex-shrink: 0;
+  background: var(--forge-theme-surface-container);
+  border-left: 1px solid var(--forge-theme-outline);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.map-vehicle-locator {
+  padding: 14px 12px 8px;
+  border-bottom: 1px solid var(--forge-theme-outline);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.map-locator-label {
+  font-size: 11px;
+  color: var(--forge-theme-text-medium);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.map-locator-input-wrap {
+  position: relative;
+}
+
+.map-locator-input {
+  width: 100%;
+  padding: 9px 36px 9px 12px;
+  background: var(--forge-theme-surface);
+  border: 1px solid var(--forge-theme-outline-medium);
+  border-radius: 4px;
+  color: var(--forge-theme-text-high);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+}
+
+.map-locator-input::placeholder { color: var(--forge-theme-text-low); }
+
+.map-locator-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px !important;
+  color: var(--forge-theme-text-medium);
+  pointer-events: none;
+}
+
+.map-locator-clear {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--forge-theme-text-medium);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  border-radius: 50%;
+}
+
+.map-locator-clear:hover { background: rgba(255,255,255,0.08); }
+
+/* Vehicle list */
+.map-vehicle-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Vehicle card */
+.mvc-card {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--forge-theme-outline);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.mvc-card:hover { background: rgba(255,255,255,0.04); }
+
+.mvc-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.mvc-run-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--forge-theme-text-high);
+  line-height: 1.35;
+  flex: 1;
+}
+
+.mvc-badge {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-yellow     { background: var(--clock); color: #000; }
+.badge-unavailable{ background: #555; color: #ccc; }
+.badge-early      { background: rgba(21,101,192,0.4); color: #90caf9; }
+.badge-ontime     { background: rgba(27,94,32,0.4); color: #a5d6a7; }
+.badge-late       { background: rgba(183,28,28,0.4); color: #ef9a9a; }
+
+.mvc-details { display: flex; flex-direction: column; gap: 3px; }
+
+.mvc-row { display: flex; gap: 4px; font-size: 12px; }
+
+.mvc-key {
+  font-weight: 600;
+  color: var(--forge-theme-text-high);
+  white-space: nowrap;
+}
+
+.mvc-val { color: var(--forge-theme-text-medium); }
+
 /* ── Board cards — adjust for dark theme ────────────────────────────── */
 .school-board-card {
   border-color: var(--forge-theme-outline);

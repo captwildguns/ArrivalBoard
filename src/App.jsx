@@ -3,6 +3,7 @@ import SchoolBoard from './components/SchoolBoard.jsx'
 import UserPreferencesPage from './components/UserPreferencesPage.jsx'
 import VehicleSearchPage from './components/VehicleSearchPage.jsx'
 import KpiPage from './components/KpiPage.jsx'
+import MapPage from './components/MapPage.jsx'
 import SchoolSelector from './components/SchoolSelector.jsx'
 import { schools, generateInitialBuses, simulateUpdate } from './data/sampleData.js'
 
@@ -158,6 +159,8 @@ export default function App() {
             <VehicleSearchPage selectedSchoolIds={selectedSchoolIds} />
           ) : activePage === 'kpi' ? (
             <KpiPage buses={buses} selectedSchoolIds={selectedSchoolIds} />
+          ) : activePage === 'map' ? (
+            <MapPage buses={buses} selectedSchoolIds={selectedSchoolIds} schools={schools} />
           ) : activePage !== 'board' ? (
             <div className="placeholder-page">
               <span className="material-icons placeholder-icon">
