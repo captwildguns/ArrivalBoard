@@ -1,14 +1,27 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import SchoolBoard from './components/SchoolBoard.jsx'
+import UserPreferencesPage from './components/UserPreferencesPage.jsx'
 import { schools, generateInitialBuses, simulateUpdate } from './data/sampleData.js'
 
 const NAV_LINKS = [
-  { key: 'board', label: 'Board', icon: 'grid_on' },
-  { key: 'map', label: 'Map', icon: 'map' },
-  { key: 'kpi', label: 'KPI', icon: 'bar_chart' },
-  { key: 'vehicle-search', label: 'Vehicle Search', icon: 'search' },
+  { key: 'board',            label: 'Board',            icon: 'directions_bus' },
+  { key: 'map',              label: 'Map',              icon: 'map' },
+  { key: 'kpi',              label: 'KPI',              icon: 'donut_large' },
+  { key: 'vehicle-search',   label: 'Vehicle Search',   icon: 'search' },
   { key: 'user-preferences', label: 'User Preferences', icon: 'settings' },
 ]
+
+const DEFAULT_PREFS = {
+  coloredKpiTiles: false,
+  kpiOverlay: true,
+  vehicleClustering: true,
+  stopTimeBuffer: '30 min',
+  showWeatherIcon: true,
+  showTemperature: true,
+  showClock: true,
+  tempUnit: 'Fahrenheit',
+  clockFormat: '12h',
+}
 
 function useCurrentTime() {
   const [time, setTime] = useState(new Date())
@@ -19,11 +32,9 @@ function useCurrentTime() {
   return time
 }
 
-/* Tyler Technologies dot-pattern logo mark */
 function TylerLogo() {
   return (
     <svg className="tyler-logo" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Tyler Technologies">
-      {/* Snowflake / dot-cluster pattern approximating Tyler brand mark */}
       <circle cx="14" cy="4"  r="2.2" fill="white"/>
       <circle cx="14" cy="24" r="2.2" fill="white"/>
       <circle cx="4"  cy="14" r="2.2" fill="white"/>
@@ -41,11 +52,8 @@ export default function App() {
   const [selectedSchoolIds, setSelectedSchoolIds] = useState(schools.map(s => s.locationId))
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [activePage, setActivePage] = useState('board')
+  const [prefs, setPrefs] = useState(DEFAULT_PREFS)
   const currentTime = useCurrentTime()
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', 'light')
-  }, [])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,15 +74,16 @@ export default function App() {
   const formattedTime = currentTime.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
-    hour12: true,
+    hour12: prefs.clockFormat === '12h',
   })
+
+  const tempDisplay = prefs.tempUnit === 'Fahrenheit' ? '78°' : '26°'
 
   return (
     <div className="app-root">
 
-      {/* ── App Bar / Omnibar ── */}
+      {/* ── Omnibar ── */}
       <header className="app-bar">
-        {/* Left: hamburger + logo + title */}
         <div className="app-bar-start">
           <button
             className="app-bar-icon-btn"
@@ -87,14 +96,18 @@ export default function App() {
           <span className="app-bar-title">Arrival Board</span>
         </div>
 
-        {/* Center: weather + time (absolutely centered) */}
         <div className="app-bar-center">
-          <span className="material-icons omnibar-weather-icon">wb_sunny</span>
-          <span className="omnibar-temp">78°</span>
-          <span className="omnibar-time">{formattedTime}</span>
+          {prefs.showWeatherIcon && (
+            <span className="material-icons omnibar-weather-icon">wb_sunny</span>
+          )}
+          {prefs.showTemperature && (
+            <span className="omnibar-temp">{tempDisplay}</span>
+          )}
+          {prefs.showClock && (
+            <span className="omnibar-time">{formattedTime}</span>
+          )}
         </div>
 
-        {/* Right: help + avatar */}
         <div className="app-bar-end">
           <button className="app-bar-icon-btn" title="Help documentation" aria-label="Help">
             <span className="material-icons">help_outline</span>
@@ -105,49 +118,54 @@ export default function App() {
 
       <div className="app-body">
 
-        {/* ── Navigation Drawer ── */}
+        {/* ── Sidebar ── */}
         <nav className={`sidebar${sidebarOpen ? '' : ' sidebar-collapsed'}`}>
 
-          <div className="sidebar-schools-header">
-            <span className="sidebar-section-label">Schools</span>
-            <div className="sidebar-school-actions">
-              <button className="sidebar-link-btn" onClick={() => setSelectedSchoolIds(schools.map(s => s.locationId))}>All</button>
-              <span className="sidebar-sep">·</span>
-              <button className="sidebar-link-btn" onClick={() => setSelectedSchoolIds([])}>None</button>
+          {/* School selector */}
+          <div className="sidebar-school-selector">
+            <span className="sidebar-school-label">School</span>
+            <div className="sidebar-school-multi">
+              <div className="sidebar-school-actions-row">
+                <span className="sidebar-section-label" style={{padding: 0}}>Schools</span>
+                <div style={{display:'flex',gap:'2px'}}>
+                  <button className="sidebar-link-btn" onClick={() => setSelectedSchoolIds(schools.map(s => s.locationId))}>All</button>
+                  <span className="sidebar-sep">·</span>
+                  <button className="sidebar-link-btn" onClick={() => setSelectedSchoolIds([])}>None</button>
+                </div>
+              </div>
+              <ul className="school-list">
+                {schools.map(school => {
+                  const isSelected = selectedSchoolIds.includes(school.locationId)
+                  const count = school.activeVehicleCount ?? 0
+                  return (
+                    <li
+                      key={school.locationId}
+                      className={`school-list-item${isSelected ? ' selected' : ''}`}
+                      onClick={() => toggleSchool(school.locationId)}
+                    >
+                      <label className="school-list-label">
+                        <input
+                          type="checkbox"
+                          className="school-checkbox"
+                          checked={isSelected}
+                          onChange={() => toggleSchool(school.locationId)}
+                          onClick={e => e.stopPropagation()}
+                        />
+                        <div className="school-info">
+                          <span className="school-item-name">
+                            {school.schoolName}
+                            <span className="school-vehicle-count"> ({count})</span>
+                          </span>
+                        </div>
+                      </label>
+                    </li>
+                  )
+                })}
+              </ul>
             </div>
           </div>
 
-          <ul className="school-list">
-            {schools.map(school => {
-              const isSelected = selectedSchoolIds.includes(school.locationId)
-              const count = school.activeVehicleCount ?? 0
-              return (
-                <li
-                  key={school.locationId}
-                  className={`school-list-item${isSelected ? ' selected' : ''}`}
-                  onClick={() => toggleSchool(school.locationId)}
-                >
-                  <label className="school-list-label">
-                    <input
-                      type="checkbox"
-                      className="school-checkbox"
-                      checked={isSelected}
-                      onChange={() => toggleSchool(school.locationId)}
-                      onClick={e => e.stopPropagation()}
-                    />
-                    <div className="school-info">
-                      <span className="school-item-name">
-                        {school.schoolName}
-                        <span className="school-vehicle-count"> ({count})</span>
-                      </span>
-                      <span className="school-item-meta">{school.city}, {school.stateAbbreviation}</span>
-                    </div>
-                  </label>
-                </li>
-              )
-            })}
-          </ul>
-
+          {/* Nav links */}
           <div className="sidebar-nav-divider" />
           <nav className="sidebar-nav">
             {NAV_LINKS.map(link => (
@@ -165,7 +183,9 @@ export default function App() {
 
         {/* ── Main Content ── */}
         <main className="main-content">
-          {activePage !== 'board' ? (
+          {activePage === 'user-preferences' ? (
+            <UserPreferencesPage prefs={prefs} onChange={setPrefs} />
+          ) : activePage !== 'board' ? (
             <div className="placeholder-page">
               <span className="material-icons placeholder-icon">
                 {NAV_LINKS.find(l => l.key === activePage)?.icon}

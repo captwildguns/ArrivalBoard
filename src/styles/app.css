@@ -1,46 +1,46 @@
-/* ── Tyler Forge Design Tokens ─────────────────────────────────────── */
+/* ── Tyler Forge Design Tokens — Dark theme (matches screenshots) ───── */
 :root {
   /* Brand */
   --forge-theme-brand: #0f3963;
-  --forge-theme-primary: #1a5fa8;
+  --forge-theme-primary: #7b7fc4;
   --forge-theme-on-primary: #ffffff;
 
-  /* Surfaces */
-  --forge-theme-surface: #ffffff;
-  --forge-theme-surface-dim: #f0f2f5;
-  --forge-theme-surface-container: #f5f7fa;
-  --forge-theme-surface-container-high: #eaecef;
+  /* Surfaces — dark by default */
+  --forge-theme-surface: #2d2d2d;
+  --forge-theme-surface-dim: #1e1e1e;
+  --forge-theme-surface-container: #333333;
+  --forge-theme-surface-container-high: #3d3d3d;
 
   /* Text */
-  --forge-theme-text-high: rgba(0, 0, 0, 0.87);
-  --forge-theme-text-medium: rgba(0, 0, 0, 0.60);
-  --forge-theme-text-low: rgba(0, 0, 0, 0.38);
+  --forge-theme-text-high: rgba(255, 255, 255, 0.90);
+  --forge-theme-text-medium: rgba(255, 255, 255, 0.60);
+  --forge-theme-text-low: rgba(255, 255, 255, 0.35);
 
   /* Outline */
-  --forge-theme-outline: rgba(0, 0, 0, 0.12);
-  --forge-theme-outline-medium: rgba(0, 0, 0, 0.20);
+  --forge-theme-outline: rgba(255, 255, 255, 0.10);
+  --forge-theme-outline-medium: rgba(255, 255, 255, 0.18);
 
-  /* Status colors — matching original BusBoard.razor.css */
-  --status-early-color: #1565c0;
-  --status-early-bg: #e3f2fd;
-  --status-early-border: #90caf9;
+  /* Status badge colors — tuned for dark background */
+  --status-early-color: #90caf9;
+  --status-early-bg: rgba(21, 101, 192, 0.25);
+  --status-early-border: rgba(144, 202, 249, 0.40);
 
-  --status-on-time-color: #1b5e20;
-  --status-on-time-bg: #e8f5e9;
-  --status-on-time-border: #a5d6a7;
+  --status-on-time-color: #a5d6a7;
+  --status-on-time-bg: rgba(27, 94, 32, 0.25);
+  --status-on-time-border: rgba(165, 214, 167, 0.40);
 
-  --status-late-color: #b71c1c;
-  --status-late-bg: #ffebee;
-  --status-late-border: #ef9a9a;
+  --status-late-color: #ef9a9a;
+  --status-late-bg: rgba(183, 28, 28, 0.25);
+  --status-late-border: rgba(239, 154, 154, 0.40);
 
-  --status-unavailable-color: #424242;
-  --status-unavailable-bg: #eeeeee;
-  --status-unavailable-border: #bdbdbd;
+  --status-unavailable-color: #9e9e9e;
+  --status-unavailable-bg: rgba(80, 80, 80, 0.35);
+  --status-unavailable-border: rgba(158, 158, 158, 0.30);
 
-  /* Arrived, Departed, Pending all use yellow per the user guide */
-  --status-yellow-color: #7B5800;
-  --status-yellow-bg: #FFF8E1;
-  --status-yellow-border: #FFD54F;
+  /* Arrived, Departed, Pending — yellow per the user guide */
+  --status-yellow-color: #ffc100;
+  --status-yellow-bg: rgba(255, 193, 0, 0.18);
+  --status-yellow-border: rgba(255, 193, 0, 0.40);
 
   /* Clock / time color from original */
   --clock: #ffc100;
@@ -56,39 +56,7 @@
   --elevation-3: 0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.10);
 }
 
-[data-theme="dark"] {
-  --forge-theme-surface: #1e1e1e;
-  --forge-theme-surface-dim: #121212;
-  --forge-theme-surface-container: #2c2c2c;
-  --forge-theme-surface-container-high: #383838;
-
-  --forge-theme-text-high: rgba(255, 255, 255, 0.87);
-  --forge-theme-text-medium: rgba(255, 255, 255, 0.60);
-  --forge-theme-text-low: rgba(255, 255, 255, 0.38);
-
-  --forge-theme-outline: rgba(255, 255, 255, 0.12);
-  --forge-theme-outline-medium: rgba(255, 255, 255, 0.20);
-
-  --status-early-color: #90caf9;
-  --status-early-bg: rgba(21, 101, 192, 0.20);
-  --status-early-border: rgba(21, 101, 192, 0.40);
-
-  --status-on-time-color: #a5d6a7;
-  --status-on-time-bg: rgba(27, 94, 32, 0.20);
-  --status-on-time-border: rgba(27, 94, 32, 0.40);
-
-  --status-late-color: #ef9a9a;
-  --status-late-bg: rgba(183, 28, 28, 0.20);
-  --status-late-border: rgba(183, 28, 28, 0.40);
-
-  --status-unavailable-color: #9e9e9e;
-  --status-unavailable-bg: rgba(66, 66, 66, 0.30);
-  --status-unavailable-border: rgba(66, 66, 66, 0.50);
-
-  --status-yellow-color: #c8900a;
-  --status-yellow-bg: rgba(255, 193, 0, 0.18);
-  --status-yellow-border: rgba(255, 193, 0, 0.45);
-}
+/* Dark theme is the default — no override block needed */
 
 /* ── Reset & Base ──────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1031,8 +999,8 @@ body {
 }
 
 .sidebar-nav-item.active {
-  background: color-mix(in srgb, var(--forge-theme-primary) 12%, transparent);
-  color: var(--forge-theme-primary);
+  background: rgba(123, 127, 196, 0.30);
+  color: #a0a4e8;
 }
 
 .sidebar-nav-icon {
@@ -1072,13 +1040,247 @@ body {
   color: var(--forge-theme-text-medium);
 }
 
+/* ── Sidebar school selector block ──────────────────────────────────── */
+.sidebar-school-selector {
+  padding: 12px 12px 0;
+}
+
+.sidebar-school-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forge-theme-text-low);
+  display: block;
+  margin-bottom: 4px;
+  padding-left: 4px;
+}
+
+.sidebar-school-multi {
+  /* wrapper for the multi-school list */
+}
+
+.sidebar-school-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 6px;
+}
+
+/* ── User Preferences Page ──────────────────────────────────────────── */
+.user-prefs-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.user-prefs-content {
+  flex: 1;
+  padding: 24px 32px;
+  overflow-y: auto;
+}
+
+.user-prefs-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--forge-theme-text-high);
+  margin-bottom: 12px;
+}
+
+.user-prefs-divider {
+  height: 1px;
+  background: var(--forge-theme-outline);
+  margin-bottom: 24px;
+}
+
+.prefs-section-block {
+  margin-bottom: 28px;
+}
+
+.prefs-section-heading {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--forge-theme-text-high);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-icon-btn {
+  background: none;
+  border: none;
+  color: var(--forge-theme-text-medium);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.info-icon-btn .material-icons {
+  font-size: 16px;
+}
+
+/* Toggle */
+.pref-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.pref-toggle {
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background: #555;
+  border: none;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.pref-toggle.on {
+  background: var(--clock);
+}
+
+.pref-toggle-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  position: absolute;
+  left: 3px;
+  transition: left 0.2s;
+}
+
+.pref-toggle.on .pref-toggle-thumb {
+  left: 19px;
+}
+
+.pref-toggle-label {
+  font-size: 14px;
+  color: var(--forge-theme-text-high);
+}
+
+/* Segmented button group */
+.seg-group {
+  display: inline-flex;
+  border: 1px solid var(--forge-theme-outline-medium);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.seg-btn {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  background: transparent;
+  color: var(--forge-theme-text-medium);
+  border: none;
+  border-right: 1px solid var(--forge-theme-outline-medium);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.seg-btn:last-child {
+  border-right: none;
+}
+
+.seg-btn.active {
+  background: rgba(123, 127, 196, 0.30);
+  color: #c0c4f0;
+}
+
+.seg-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--forge-theme-text-high);
+}
+
+/* Gold checkbox */
+.pref-check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.pref-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--clock);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pref-check-label {
+  font-size: 14px;
+  color: var(--forge-theme-text-high);
+}
+
+/* Weather/Time two-column layout */
+.weather-time-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+  max-width: 600px;
+}
+
+.weather-time-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.weather-time-col .seg-group {
+  margin-top: 8px;
+}
+
+/* Footer */
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 24px;
+  font-size: 12px;
+  color: var(--forge-theme-text-low);
+  border-top: 1px solid var(--forge-theme-outline);
+  flex-shrink: 0;
+}
+
+.forge-logo-mark {
+  width: 14px;
+  height: 14px;
+  color: var(--forge-theme-text-low);
+  flex-shrink: 0;
+}
+
+/* ── Board cards — adjust for dark theme ────────────────────────────── */
+.school-board-card {
+  border-color: var(--forge-theme-outline);
+}
+
+.board-table thead tr {
+  background: var(--forge-theme-surface-container);
+}
+
 /* ── Scrollbar ──────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: var(--forge-theme-outline-medium);
+  background: rgba(255,255,255,0.15);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in srgb, var(--forge-theme-text-medium) 40%, transparent);
+  background: rgba(255,255,255,0.25);
 }
