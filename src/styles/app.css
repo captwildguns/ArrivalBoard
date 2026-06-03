@@ -37,17 +37,10 @@
   --status-unavailable-bg: #eeeeee;
   --status-unavailable-border: #bdbdbd;
 
-  --status-arrived-color: #4a148c;
-  --status-arrived-bg: #f3e5f5;
-  --status-arrived-border: #ce93d8;
-
-  --status-departed-color: #bf360c;
-  --status-departed-bg: #fbe9e7;
-  --status-departed-border: #ffab91;
-
-  --status-pending-color: #e65100;
-  --status-pending-bg: #fff3e0;
-  --status-pending-border: #ffcc80;
+  /* Arrived, Departed, Pending all use yellow per the user guide */
+  --status-yellow-color: #7B5800;
+  --status-yellow-bg: #FFF8E1;
+  --status-yellow-border: #FFD54F;
 
   /* Clock / time color from original */
   --clock: #ffc100;
@@ -92,13 +85,9 @@
   --status-unavailable-bg: rgba(66, 66, 66, 0.30);
   --status-unavailable-border: rgba(66, 66, 66, 0.50);
 
-  --status-arrived-color: #ce93d8;
-  --status-arrived-bg: rgba(74, 20, 140, 0.20);
-  --status-arrived-border: rgba(74, 20, 140, 0.40);
-
-  --status-departed-color: #ffab91;
-  --status-departed-bg: rgba(191, 54, 12, 0.20);
-  --status-departed-border: rgba(191, 54, 12, 0.40);
+  --status-yellow-color: #c8900a;
+  --status-yellow-bg: rgba(255, 193, 0, 0.18);
+  --status-yellow-border: rgba(255, 193, 0, 0.45);
 }
 
 /* ── Reset & Base ──────────────────────────────────────────────────── */
@@ -657,22 +646,11 @@ body {
   border-color: var(--status-unavailable-border);
 }
 
-.status-arrived {
-  color: var(--status-arrived-color);
-  background: var(--status-arrived-bg);
-  border-color: var(--status-arrived-border);
-}
-
-.status-departed {
-  color: var(--status-departed-color);
-  background: var(--status-departed-bg);
-  border-color: var(--status-departed-border);
-}
-
-.status-pending {
-  color: var(--status-pending-color);
-  background: var(--status-pending-bg);
-  border-color: var(--status-pending-border);
+/* Arrived, Departed, Pending — yellow per the user guide */
+.status-yellow {
+  color: var(--status-yellow-color);
+  background: var(--status-yellow-bg);
+  border-color: var(--status-yellow-border);
 }
 
 /* ── Row Highlight (flash animation on status change) ───────────────── */
@@ -816,8 +794,13 @@ body {
   padding: 12px 16px;
 }
 
+.prefs-footer-row {
+  display: flex;
+  gap: 8px;
+}
+
 .reset-btn {
-  width: 100%;
+  flex: 1;
   padding: 8px;
   font-size: 13px;
   font-family: inherit;
@@ -832,6 +815,22 @@ body {
 .reset-btn:hover {
   background: color-mix(in srgb, var(--forge-theme-primary) 8%, transparent);
 }
+
+.apply-btn {
+  flex: 1;
+  padding: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  border: none;
+  background: var(--forge-theme-primary);
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.apply-btn:hover { opacity: 0.88; }
 
 /* ── Icon Button ────────────────────────────────────────────────────── */
 .icon-btn {
@@ -898,6 +897,163 @@ body {
 
 .tv-mode .eta-time { font-size: 21px; }
 .tv-mode .bus-number { font-size: 21px; }
+
+/* ── Omnibar — Weather & Time ───────────────────────────────────────── */
+.omnibar-weather {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: default;
+}
+
+.omnibar-weather-icon {
+  font-size: 18px !important;
+  color: rgba(255,255,255,0.85);
+}
+
+.omnibar-temp {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+}
+
+.omnibar-time {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.02em;
+  min-width: 72px;
+  text-align: right;
+}
+
+/* ── Sidebar Schools Header ─────────────────────────────────────────── */
+.sidebar-schools-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 16px 8px;
+}
+
+.sidebar-section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forge-theme-text-low);
+}
+
+.sidebar-school-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.sidebar-link-btn {
+  font-size: 11px;
+  font-family: inherit;
+  background: none;
+  border: none;
+  color: var(--forge-theme-primary);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background 0.15s;
+}
+
+.sidebar-link-btn:hover {
+  background: color-mix(in srgb, var(--forge-theme-primary) 10%, transparent);
+}
+
+.sidebar-sep {
+  font-size: 11px;
+  color: var(--forge-theme-text-low);
+}
+
+/* ── School vehicle count ────────────────────────────────────────────── */
+.school-vehicle-count {
+  font-weight: 400;
+  color: var(--forge-theme-text-medium);
+  font-size: 12px;
+}
+
+/* ── Sidebar Nav Links ──────────────────────────────────────────────── */
+.sidebar-nav-divider {
+  height: 1px;
+  background: var(--forge-theme-outline);
+  margin: 8px 0;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 8px 16px;
+  gap: 2px;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border: none;
+  background: transparent;
+  color: var(--forge-theme-text-medium);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar-nav-item:hover {
+  background: var(--forge-theme-surface-container);
+  color: var(--forge-theme-text-high);
+}
+
+.sidebar-nav-item.active {
+  background: color-mix(in srgb, var(--forge-theme-primary) 12%, transparent);
+  color: var(--forge-theme-primary);
+}
+
+.sidebar-nav-icon {
+  font-size: 20px !important;
+  flex-shrink: 0;
+}
+
+.sidebar-nav-label {
+  flex: 1;
+}
+
+/* ── Placeholder page ───────────────────────────────────────────────── */
+.placeholder-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 16px;
+  color: var(--forge-theme-text-medium);
+  text-align: center;
+}
+
+.placeholder-icon {
+  font-size: 72px !important;
+  opacity: 0.3;
+}
+
+.placeholder-page h2 {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--forge-theme-text-high);
+}
+
+.placeholder-page p {
+  font-size: 14px;
+  color: var(--forge-theme-text-medium);
+}
 
 /* ── Scrollbar ──────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }

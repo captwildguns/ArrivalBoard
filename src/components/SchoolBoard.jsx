@@ -11,15 +11,41 @@ export default function SchoolBoard({ school, buses }) {
   const [columns, setColumns] = useState(DEFAULT_COLUMNS)
   const [showEarlyAsOnTime, setShowEarlyAsOnTime] = useState(false)
   const [tvMode, setTvMode] = useState(false)
+  const [groupUnavailableAtBottom, setGroupUnavailableAtBottom] = useState(false)
+  const [sortByPlanned, setSortByPlanned] = useState(false)
 
-  const displayBuses = showEarlyAsOnTime
+  let displayBuses = showEarlyAsOnTime
     ? buses.map(b => b.arrivalStatus === EtaStatus.Early
         ? { ...b, arrivalStatus: EtaStatus.OnTime }
         : b)
-    : buses
+    : [...buses]
 
-  const arrivals = displayBuses.filter(b => b.arrivalStatus !== EtaStatus.Unavailable || b.plannedTime).length
+  if (groupUnavailableAtBottom) {
+    displayBuses = [
+      ...displayBuses.filter(b => b.arrivalStatus !== EtaStatus.Unavailable),
+      ...displayBuses.filter(b => b.arrivalStatus === EtaStatus.Unavailable),
+    ]
+  }
+
+  if (sortByPlanned) {
+    displayBuses = [...displayBuses].sort((a, b) => {
+      const ta = a.plannedTime?.getTime() ?? Infinity
+      const tb = b.plannedTime?.getTime() ?? Infinity
+      return ta - tb
+    })
+  }
+
+  const visibleCount = displayBuses.filter(
+    b => b.arrivalStatus !== EtaStatus.Unavailable || b.plannedTime
+  ).length
   const activeCount = school.activeVehicleCount ?? buses.length
+
+  const VIEW_MODES = [
+    { key: 'arrivals', label: 'Arrivals' },
+    { key: 'departures', label: 'Departures' },
+    { key: 'both-horizontal', label: 'Side by Side' },
+    { key: 'both-vertical', label: 'Stacked' },
+  ]
 
   return (
     <div className={`school-board-card${tvMode ? ' tv-mode' : ''}`}>
@@ -32,24 +58,16 @@ export default function SchoolBoard({ school, buses }) {
         </div>
         <div className="board-toolbar-actions">
           <div className="view-toggle">
-            {['arrivals', 'departures', 'both-horizontal', 'both-vertical'].map(mode => {
-              const labels = {
-                'arrivals': 'Arrivals',
-                'departures': 'Departures',
-                'both-horizontal': 'Side by Side',
-                'both-vertical': 'Stacked',
-              }
-              return (
-                <button
-                  key={mode}
-                  className={`view-toggle-btn${viewMode === mode ? ' active' : ''}`}
-                  onClick={() => setViewMode(mode)}
-                  title={labels[mode]}
-                >
-                  {labels[mode]}
-                </button>
-              )
-            })}
+            {VIEW_MODES.map(({ key, label }) => (
+              <button
+                key={key}
+                className={`view-toggle-btn${viewMode === key ? ' active' : ''}`}
+                onClick={() => setViewMode(key)}
+                title={label}
+              >
+                {label}
+              </button>
+            ))}
           </div>
           <button
             className={`icon-btn${prefsOpen ? ' active' : ''}`}
@@ -57,7 +75,7 @@ export default function SchoolBoard({ school, buses }) {
             title="Display preferences"
             aria-label="Display preferences"
           >
-            <span className="material-icons">tune</span>
+            <span className="material-icons">filter_alt</span>
           </button>
         </div>
       </div>
@@ -75,6 +93,10 @@ export default function SchoolBoard({ school, buses }) {
             onShowEarlyAsOnTimeChange={setShowEarlyAsOnTime}
             tvMode={tvMode}
             onTvModeChange={setTvMode}
+            groupUnavailableAtBottom={groupUnavailableAtBottom}
+            onGroupUnavailableChange={setGroupUnavailableAtBottom}
+            sortByPlanned={sortByPlanned}
+            onSortByPlannedChange={setSortByPlanned}
             onClose={() => setPrefsOpen(false)}
           />
         )}
@@ -86,7 +108,7 @@ export default function SchoolBoard({ school, buses }) {
           Live
         </span>
         <span className="bus-count">
-          {arrivals} {arrivals === 1 ? 'bus' : 'buses'}
+          {visibleCount} {visibleCount === 1 ? 'vehicle' : 'vehicles'}
         </span>
       </div>
     </div>

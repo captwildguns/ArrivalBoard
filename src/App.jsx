@@ -2,14 +2,34 @@ import React, { useState, useEffect, useCallback } from 'react'
 import SchoolBoard from './components/SchoolBoard.jsx'
 import { schools, generateInitialBuses, simulateUpdate } from './data/sampleData.js'
 
+const NAV_LINKS = [
+  { key: 'board', label: 'Board', icon: 'grid_on' },
+  { key: 'map', label: 'Map', icon: 'map' },
+  { key: 'kpi', label: 'KPI', icon: 'bar_chart' },
+  { key: 'vehicle-search', label: 'Vehicle Search', icon: 'search' },
+  { key: 'user-preferences', label: 'User Preferences', icon: 'settings' },
+]
+
+const WEATHER = { icon: 'wb_sunny', temp: '72°F', condition: 'Sunny' }
+
+function useCurrentTime() {
+  const [time, setTime] = useState(new Date())
+  useEffect(() => {
+    const id = setInterval(() => setTime(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
+  return time
+}
+
 export default function App() {
   const [buses, setBuses] = useState(() => generateInitialBuses())
   const [selectedSchoolIds, setSelectedSchoolIds] = useState(schools.map(s => s.locationId))
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [activePage, setActivePage] = useState('board')
   const [darkMode, setDarkMode] = useState(
     () => window.matchMedia('(prefers-color-scheme: dark)').matches
   )
-  const [lastUpdated, setLastUpdated] = useState(new Date())
+  const currentTime = useCurrentTime()
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
@@ -25,7 +45,6 @@ export default function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       setBuses(prev => simulateUpdate(prev))
-      setLastUpdated(new Date())
     }, 6000)
     return () => clearInterval(interval)
   }, [])
@@ -39,9 +58,15 @@ export default function App() {
   const visibleSchools = schools.filter(s => selectedSchoolIds.includes(s.locationId))
   const boardCount = visibleSchools.length
 
+  const formattedTime = currentTime.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  })
+
   return (
     <div className="app-root">
-      {/* App Bar */}
+      {/* ── App Bar / Omnibar ── */}
       <header className="app-bar">
         <div className="app-bar-start">
           <button
@@ -53,16 +78,24 @@ export default function App() {
           </button>
           <div className="app-bar-brand">
             <svg className="tyler-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Tyler Technologies">
-              <rect width="32" height="32" rx="4" fill="white" fillOpacity="0.15" />
+              <rect width="32" height="32" rx="4" fill="white" fillOpacity="0.18" />
               <text x="5" y="22" fontSize="16" fontWeight="700" fill="white" fontFamily="Roboto, sans-serif">T</text>
             </svg>
             <span className="app-bar-title">Arrival Board</span>
           </div>
         </div>
+
         <div className="app-bar-end">
-          <span className="app-bar-update-time">
-            Updated {lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true })}
-          </span>
+          {/* Weather */}
+          <div className="omnibar-weather" title={WEATHER.condition}>
+            <span className="material-icons omnibar-weather-icon">wb_sunny</span>
+            <span className="omnibar-temp">{WEATHER.temp}</span>
+          </div>
+
+          {/* Current Time */}
+          <div className="omnibar-time">{formattedTime}</div>
+
+          {/* Dark mode toggle */}
           <button
             className="icon-btn app-bar-icon"
             onClick={() => setDarkMode(d => !d)}
@@ -71,18 +104,35 @@ export default function App() {
           >
             <span className="material-icons">{darkMode ? 'light_mode' : 'dark_mode'}</span>
           </button>
+
+          {/* Help */}
+          <button className="icon-btn app-bar-icon" title="Help documentation" aria-label="Help">
+            <span className="material-icons">help_outline</span>
+          </button>
+
+          {/* User */}
           <div className="user-avatar" title="Demo User">DU</div>
         </div>
       </header>
 
       <div className="app-body">
-        {/* Sidebar / Navigation Drawer */}
+        {/* ── Navigation Drawer ── */}
         <nav className={`sidebar${sidebarOpen ? '' : ' sidebar-collapsed'}`}>
-          <div className="sidebar-section-label">Schools</div>
+
+          {/* School Selector / Multi-select */}
+          <div className="sidebar-schools-header">
+            <span className="sidebar-section-label">Schools</span>
+            <div className="sidebar-school-actions">
+              <button className="sidebar-link-btn" onClick={() => setSelectedSchoolIds(schools.map(s => s.locationId))}>All</button>
+              <span className="sidebar-sep">·</span>
+              <button className="sidebar-link-btn" onClick={() => setSelectedSchoolIds([])}>None</button>
+            </div>
+          </div>
+
           <ul className="school-list">
             {schools.map(school => {
               const isSelected = selectedSchoolIds.includes(school.locationId)
-              const schoolBuses = buses[school.locationId] ?? []
+              const count = school.activeVehicleCount ?? 0
               return (
                 <li
                   key={school.locationId}
@@ -98,10 +148,11 @@ export default function App() {
                       onClick={e => e.stopPropagation()}
                     />
                     <div className="school-info">
-                      <span className="school-item-name">{school.schoolName}</span>
-                      <span className="school-item-meta">
-                        {school.activeVehicleCount} active · {schoolBuses.length} buses
+                      <span className="school-item-name">
+                        {school.schoolName}
+                        <span className="school-vehicle-count"> ({count})</span>
                       </span>
+                      <span className="school-item-meta">{school.city}, {school.stateAbbreviation}</span>
                     </div>
                   </label>
                 </li>
@@ -109,31 +160,44 @@ export default function App() {
             })}
           </ul>
 
-          <div className="sidebar-footer">
-            <button
-              className="sidebar-action-btn"
-              onClick={() => setSelectedSchoolIds(schools.map(s => s.locationId))}
-            >
-              Select All
-            </button>
-            <button
-              className="sidebar-action-btn"
-              onClick={() => setSelectedSchoolIds([])}
-            >
-              Clear All
-            </button>
-          </div>
+          {/* Navigation Links */}
+          <div className="sidebar-nav-divider" />
+          <nav className="sidebar-nav">
+            {NAV_LINKS.map(link => (
+              <button
+                key={link.key}
+                className={`sidebar-nav-item${activePage === link.key ? ' active' : ''}`}
+                onClick={() => setActivePage(link.key)}
+              >
+                <span className="material-icons sidebar-nav-icon">{link.icon}</span>
+                <span className="sidebar-nav-label">{link.label}</span>
+              </button>
+            ))}
+          </nav>
         </nav>
 
-        {/* Main Content */}
-        <main className={`main-content boards-col-${Math.min(boardCount, 3)}`}>
-          {visibleSchools.length === 0 ? (
+        {/* ── Main Content ── */}
+        <main className="main-content">
+          {activePage !== 'board' ? (
+            <div className="placeholder-page">
+              <span className="material-icons placeholder-icon">
+                {NAV_LINKS.find(l => l.key === activePage)?.icon}
+              </span>
+              <h2 className="forge-typography--heading4">
+                {NAV_LINKS.find(l => l.key === activePage)?.label}
+              </h2>
+              <p>This view is not implemented in the mockup.</p>
+              <button className="apply-btn" onClick={() => setActivePage('board')}>
+                Back to Board
+              </button>
+            </div>
+          ) : visibleSchools.length === 0 ? (
             <div className="empty-state">
               <span className="material-icons empty-state-icon">directions_bus</span>
               <p>Select one or more schools from the sidebar to view arrival boards.</p>
             </div>
           ) : (
-            <div className={`boards-grid boards-grid-${boardCount}`}>
+            <div className={`boards-grid boards-grid-${Math.min(boardCount, 3)}`}>
               {visibleSchools.map(school => (
                 <SchoolBoard
                   key={school.locationId}
