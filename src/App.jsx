@@ -10,8 +10,6 @@ const NAV_LINKS = [
   { key: 'user-preferences', label: 'User Preferences', icon: 'settings' },
 ]
 
-const WEATHER = { icon: 'wb_sunny', temp: '72°F', condition: 'Sunny' }
-
 function useCurrentTime() {
   const [time, setTime] = useState(new Date())
   useEffect(() => {
@@ -21,26 +19,33 @@ function useCurrentTime() {
   return time
 }
 
+/* Tyler Technologies dot-pattern logo mark */
+function TylerLogo() {
+  return (
+    <svg className="tyler-logo" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Tyler Technologies">
+      {/* Snowflake / dot-cluster pattern approximating Tyler brand mark */}
+      <circle cx="14" cy="4"  r="2.2" fill="white"/>
+      <circle cx="14" cy="24" r="2.2" fill="white"/>
+      <circle cx="4"  cy="14" r="2.2" fill="white"/>
+      <circle cx="24" cy="14" r="2.2" fill="white"/>
+      <circle cx="7"  cy="7"  r="2.2" fill="white"/>
+      <circle cx="21" cy="21" r="2.2" fill="white"/>
+      <circle cx="21" cy="7"  r="2.2" fill="white"/>
+      <circle cx="7"  cy="21" r="2.2" fill="white"/>
+    </svg>
+  )
+}
+
 export default function App() {
   const [buses, setBuses] = useState(() => generateInitialBuses())
   const [selectedSchoolIds, setSelectedSchoolIds] = useState(schools.map(s => s.locationId))
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [activePage, setActivePage] = useState('board')
-  const [darkMode, setDarkMode] = useState(
-    () => window.matchMedia('(prefers-color-scheme: dark)').matches
-  )
   const currentTime = useCurrentTime()
 
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const handler = e => setDarkMode(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+    document.documentElement.setAttribute('data-theme', 'light')
   }, [])
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
-  }, [darkMode])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,60 +71,43 @@ export default function App() {
 
   return (
     <div className="app-root">
+
       {/* ── App Bar / Omnibar ── */}
       <header className="app-bar">
+        {/* Left: hamburger + logo + title */}
         <div className="app-bar-start">
           <button
-            className="icon-btn app-bar-menu-btn"
+            className="app-bar-icon-btn"
             onClick={() => setSidebarOpen(o => !o)}
             aria-label="Toggle navigation"
           >
             <span className="material-icons">menu</span>
           </button>
-          <div className="app-bar-brand">
-            <svg className="tyler-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Tyler Technologies">
-              <rect width="32" height="32" rx="4" fill="white" fillOpacity="0.18" />
-              <text x="5" y="22" fontSize="16" fontWeight="700" fill="white" fontFamily="Roboto, sans-serif">T</text>
-            </svg>
-            <span className="app-bar-title">Arrival Board</span>
-          </div>
+          <TylerLogo />
+          <span className="app-bar-title">Arrival Board</span>
         </div>
 
+        {/* Center: weather + time (absolutely centered) */}
+        <div className="app-bar-center">
+          <span className="material-icons omnibar-weather-icon">wb_sunny</span>
+          <span className="omnibar-temp">78°</span>
+          <span className="omnibar-time">{formattedTime}</span>
+        </div>
+
+        {/* Right: help + avatar */}
         <div className="app-bar-end">
-          {/* Weather */}
-          <div className="omnibar-weather" title={WEATHER.condition}>
-            <span className="material-icons omnibar-weather-icon">wb_sunny</span>
-            <span className="omnibar-temp">{WEATHER.temp}</span>
-          </div>
-
-          {/* Current Time */}
-          <div className="omnibar-time">{formattedTime}</div>
-
-          {/* Dark mode toggle */}
-          <button
-            className="icon-btn app-bar-icon"
-            onClick={() => setDarkMode(d => !d)}
-            title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-            aria-label="Toggle dark mode"
-          >
-            <span className="material-icons">{darkMode ? 'light_mode' : 'dark_mode'}</span>
-          </button>
-
-          {/* Help */}
-          <button className="icon-btn app-bar-icon" title="Help documentation" aria-label="Help">
+          <button className="app-bar-icon-btn" title="Help documentation" aria-label="Help">
             <span className="material-icons">help_outline</span>
           </button>
-
-          {/* User */}
-          <div className="user-avatar" title="Demo User">DU</div>
+          <div className="user-avatar" title="Gabe Guzman">GG</div>
         </div>
       </header>
 
       <div className="app-body">
+
         {/* ── Navigation Drawer ── */}
         <nav className={`sidebar${sidebarOpen ? '' : ' sidebar-collapsed'}`}>
 
-          {/* School Selector / Multi-select */}
           <div className="sidebar-schools-header">
             <span className="sidebar-section-label">Schools</span>
             <div className="sidebar-school-actions">
@@ -160,7 +148,6 @@ export default function App() {
             })}
           </ul>
 
-          {/* Navigation Links */}
           <div className="sidebar-nav-divider" />
           <nav className="sidebar-nav">
             {NAV_LINKS.map(link => (
@@ -183,9 +170,7 @@ export default function App() {
               <span className="material-icons placeholder-icon">
                 {NAV_LINKS.find(l => l.key === activePage)?.icon}
               </span>
-              <h2 className="forge-typography--heading4">
-                {NAV_LINKS.find(l => l.key === activePage)?.label}
-              </h2>
+              <h2>{NAV_LINKS.find(l => l.key === activePage)?.label}</h2>
               <p>This view is not implemented in the mockup.</p>
               <button className="apply-btn" onClick={() => setActivePage('board')}>
                 Back to Board
@@ -208,6 +193,7 @@ export default function App() {
             </div>
           )}
         </main>
+
       </div>
     </div>
   )
