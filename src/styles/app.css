@@ -1291,6 +1291,232 @@ body {
   flex-shrink: 0;
 }
 
+/* ── Vehicle Search Page ─────────────────────────────────────────────── */
+.vs-page {
+  padding: 24px 32px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.vs-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--forge-theme-text-high);
+  margin-bottom: 20px;
+}
+
+/* Search input */
+.vs-search-wrapper {
+  position: relative;
+  border: 1px solid var(--forge-theme-outline-medium);
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.vs-search-label {
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  font-size: 11px;
+  color: var(--forge-theme-text-medium);
+  background: var(--forge-theme-surface-dim);
+  padding: 0 4px;
+  pointer-events: none;
+}
+
+.vs-search-input {
+  width: 100%;
+  padding: 12px 40px 12px 14px;
+  background: transparent;
+  border: none;
+  color: var(--forge-theme-text-high);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+}
+
+.vs-search-input::placeholder {
+  color: var(--forge-theme-text-low);
+}
+
+.vs-search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px !important;
+  color: var(--forge-theme-text-medium);
+  pointer-events: none;
+}
+
+.vs-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--forge-theme-text-medium);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.vs-search-clear:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Table */
+.vs-table {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.vs-header-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  gap: 0;
+}
+
+.vs-col-vehicle {
+  width: 160px;
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--forge-theme-text-medium);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-left: 4px;
+}
+
+.vs-sort-icon {
+  font-size: 14px !important;
+  color: var(--forge-theme-text-medium);
+}
+
+.vs-col-runs {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--forge-theme-text-medium);
+}
+
+.vs-col-status {
+  width: 140px;
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--forge-theme-text-medium);
+  text-align: right;
+  padding-right: 4px;
+}
+
+.vs-divider {
+  height: 1px;
+  background: var(--forge-theme-outline);
+  margin: 0;
+}
+
+/* Vehicle group row */
+.vs-vehicle-group {
+  display: flex;
+  align-items: center;
+  padding: 14px 0;
+  gap: 0;
+  min-height: 48px;
+}
+
+.vs-vehicle-number {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--forge-theme-text-high);
+  align-self: center;
+  padding-left: 4px;
+}
+
+/* Run list */
+.vs-run-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-self: flex-start;
+  padding-top: 2px;
+}
+
+.vs-run-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vs-run-name {
+  font-size: 13px;
+  color: var(--forge-theme-text-high);
+  line-height: 1.4;
+}
+
+/* Green "Active" badge */
+.vs-active-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: #2e7d32;
+  color: #fff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Status cell */
+.vs-status-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  align-self: center;
+}
+
+/* "View" outlined button */
+.vs-view-btn {
+  padding: 6px 22px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 500;
+  background: transparent;
+  color: var(--forge-theme-text-high);
+  border: 1px solid var(--forge-theme-outline-medium);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.vs-view-btn:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.35);
+}
+
+/* "Unavailable" text */
+.vs-unavailable {
+  font-size: 13px;
+  color: var(--forge-theme-text-medium);
+}
+
+.vs-empty {
+  padding: 40px 0;
+  text-align: center;
+  color: var(--forge-theme-text-low);
+  font-size: 14px;
+}
+
 /* ── Board cards — adjust for dark theme ────────────────────────────── */
 .school-board-card {
   border-color: var(--forge-theme-outline);

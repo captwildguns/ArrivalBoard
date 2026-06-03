@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import SchoolBoard from './components/SchoolBoard.jsx'
 import UserPreferencesPage from './components/UserPreferencesPage.jsx'
+import VehicleSearchPage from './components/VehicleSearchPage.jsx'
 import SchoolSelector from './components/SchoolSelector.jsx'
 import { schools, generateInitialBuses, simulateUpdate } from './data/sampleData.js'
 
@@ -152,6 +153,8 @@ export default function App() {
         <main className="main-content">
           {activePage === 'user-preferences' ? (
             <UserPreferencesPage prefs={prefs} onChange={setPrefs} />
+          ) : activePage === 'vehicle-search' ? (
+            <VehicleSearchPage selectedSchoolIds={selectedSchoolIds} />
           ) : activePage !== 'board' ? (
             <div className="placeholder-page">
               <span className="material-icons placeholder-icon">
