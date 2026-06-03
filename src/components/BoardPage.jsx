@@ -122,7 +122,9 @@ const DEFAULT_PREFS = {
   driver: true, route: true, students: false,
   showEarlyAsOnTime: false, tvMode: false,
   groupUnavailableAtBottom: false, sortByPlanned: false,
-  viewMode: 'both-vertical',
+  viewMode: 'both-horizontal',
+  showLateArrivalsOnly: false,
+  hideUnavailableVehicles: false,
 }
 
 // ── Main BoardPage ──────────────────────────────────────────────────────
@@ -140,6 +142,12 @@ export default function BoardPage({ schools, buses, selectedSchoolIds }) {
   function getBuses(schoolId) {
     let list = buses[schoolId] ?? []
 
+    if (prefs.hideUnavailableVehicles) {
+      list = list.filter(b => b.arrivalStatus !== EtaStatus.Unavailable)
+    }
+    if (prefs.showLateArrivalsOnly) {
+      list = list.filter(b => b.arrivalStatus === EtaStatus.Late)
+    }
     if (prefs.showEarlyAsOnTime) {
       list = list.map(b =>
         b.arrivalStatus === EtaStatus.Early ? { ...b, arrivalStatus: EtaStatus.OnTime } : b
@@ -212,7 +220,7 @@ export default function BoardPage({ schools, buses, selectedSchoolIds }) {
         {prefsOpen && (
           <DisplayPreferences
             columns={columns}
-            onColumnsChange={cols => setPrefs(p => ({ ...p, ...cols }))}
+            onColumnsChange={cols => setPrefs(p => ({ ...p, driver: cols.driver, route: cols.route }))}
             showEarlyAsOnTime={prefs.showEarlyAsOnTime}
             onShowEarlyAsOnTimeChange={v => setPrefs(p => ({ ...p, showEarlyAsOnTime: v }))}
             tvMode={prefs.tvMode}
