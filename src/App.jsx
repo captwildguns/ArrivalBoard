@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import SchoolBoard from './components/SchoolBoard.jsx'
+import BoardPage from './components/BoardPage.jsx'
 import UserPreferencesPage from './components/UserPreferencesPage.jsx'
 import VehicleSearchPage from './components/VehicleSearchPage.jsx'
 import KpiPage from './components/KpiPage.jsx'
@@ -71,9 +71,6 @@ export default function App() {
       prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
     )
   }, [])
-
-  const visibleSchools = schools.filter(s => selectedSchoolIds.includes(s.locationId))
-  const boardCount = visibleSchools.length
 
   const formattedTime = currentTime.toLocaleTimeString('en-US', {
     hour: 'numeric',
@@ -153,7 +150,13 @@ export default function App() {
 
         {/* ── Main Content ── */}
         <main className="main-content">
-          {activePage === 'user-preferences' ? (
+          {activePage === 'board' ? (
+            <BoardPage
+              schools={schools}
+              buses={buses}
+              selectedSchoolIds={selectedSchoolIds}
+            />
+          ) : activePage === 'user-preferences' ? (
             <UserPreferencesPage prefs={prefs} onChange={setPrefs} />
           ) : activePage === 'vehicle-search' ? (
             <VehicleSearchPage selectedSchoolIds={selectedSchoolIds} />
@@ -161,33 +164,7 @@ export default function App() {
             <KpiPage buses={buses} selectedSchoolIds={selectedSchoolIds} />
           ) : activePage === 'map' ? (
             <MapPage buses={buses} selectedSchoolIds={selectedSchoolIds} schools={schools} />
-          ) : activePage !== 'board' ? (
-            <div className="placeholder-page">
-              <span className="material-icons placeholder-icon">
-                {NAV_LINKS.find(l => l.key === activePage)?.icon}
-              </span>
-              <h2>{NAV_LINKS.find(l => l.key === activePage)?.label}</h2>
-              <p>This view is not implemented in the mockup.</p>
-              <button className="apply-btn" onClick={() => setActivePage('board')}>
-                Back to Board
-              </button>
-            </div>
-          ) : visibleSchools.length === 0 ? (
-            <div className="empty-state">
-              <span className="material-icons empty-state-icon">directions_bus</span>
-              <p>Select one or more schools from the sidebar to view arrival boards.</p>
-            </div>
-          ) : (
-            <div className={`boards-grid boards-grid-${Math.min(boardCount, 3)}`}>
-              {visibleSchools.map(school => (
-                <SchoolBoard
-                  key={school.locationId}
-                  school={school}
-                  buses={buses[school.locationId] ?? []}
-                />
-              ))}
-            </div>
-          )}
+          ) : null}
         </main>
 
       </div>
