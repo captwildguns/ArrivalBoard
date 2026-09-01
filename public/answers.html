@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b2d4d">
+<title>Arrival Board Answers</title>
+<style>
+  :root{
+    --navy:#0b2d4d; --blue:#1c69d4; --ink:#12212e; --mid:#5b6b7a;
+    --line:#dde5ec; --bg:#f4f7fa; --card:#ffffff;
+    --green:#1e8a4c; --red:#c0392b; --amber:#b8860b; --grey:#7a8894;
+    --purple:#6b4fbb;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.55 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+
+  header{
+    background:linear-gradient(135deg,var(--navy),#164a7d);
+    color:#fff; padding:13px 20px;
+    position:sticky; top:0; z-index:60; box-shadow:0 2px 10px rgba(11,45,77,.22);
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+  }
+  header .titles{flex:0 0 auto}
+  header h1{margin:0 0 2px; font-size:18px; letter-spacing:.2px}
+  header p{margin:0; font-size:12px; color:#bcd6f2}
+  header .bar{display:flex; gap:8px; align-items:center; flex:1 1 320px; min-width:240px}
+  #q{
+    flex:1 1 auto; min-width:0; padding:10px 13px; border-radius:7px;
+    border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.12);
+    color:#fff; font-size:15px;
+  }
+  #q::placeholder{color:#a9c6e6}
+  #q:focus{outline:2px solid #6ba8ec; background:rgba(255,255,255,.2)}
+  #count{font-size:12px; color:#bcd6f2; white-space:nowrap; padding:0 2px}
+  .btn{
+    padding:10px 13px; border-radius:7px; border:1px solid rgba(255,255,255,.35);
+    background:transparent; color:#fff; font-size:12.5px; cursor:pointer; white-space:nowrap;
+  }
+  .btn:hover{background:rgba(255,255,255,.16)}
+  #topicsBtn{display:none}
+
+  .shell{display:flex; align-items:flex-start; max-width:1340px; margin:0 auto}
+
+  aside{
+    flex:0 0 292px; position:sticky; top:66px; align-self:flex-start;
+    max-height:calc(100vh - 66px); overflow-y:auto;
+    background:#fff; border-right:1px solid var(--line);
+    padding:16px 12px 40px;
+  }
+  aside .group{margin:0 0 16px}
+  aside .glabel{
+    font-size:10.5px; text-transform:uppercase; letter-spacing:1.1px; font-weight:700;
+    color:var(--mid); padding:0 10px 6px; border-bottom:1px solid var(--line); margin:0 0 5px;
+  }
+  aside a{
+    display:block; text-decoration:none; color:var(--ink); font-size:13.5px; line-height:1.35;
+    padding:8px 10px; border-radius:6px; border-left:3px solid transparent;
+  }
+  aside a:hover{background:#eef4fb; color:var(--navy); border-left-color:var(--blue)}
+  aside a.on{background:#e6f0fb; color:var(--navy); font-weight:600; border-left-color:var(--blue)}
+  aside a.hot{color:#8b2a20}
+  aside a.hot:hover,aside a.hot.on{border-left-color:var(--red)}
+
+  main{flex:1 1 auto; min-width:0; padding:22px 26px 120px}
+
+  h2.sec{
+    font-size:14.5px; text-transform:uppercase; letter-spacing:1.1px; color:var(--navy);
+    margin:34px 0 4px; padding-bottom:7px; border-bottom:2px solid var(--blue);
+  }
+  h2.sec:first-of-type{margin-top:2px}
+  .sub{font-size:13.5px; color:var(--mid); margin:8px 0 15px}
+
+  .card{
+    background:var(--card); border:1px solid var(--line); border-left:4px solid var(--blue);
+    border-radius:9px; padding:15px 18px; margin:0 0 13px;
+    box-shadow:0 1px 3px rgba(18,33,46,.06); scroll-margin-top:80px;
+  }
+  .card h3{
+    margin:0 0 9px; font-size:15.5px; color:var(--navy);
+    display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+  }
+  .card.flash{animation:flash 1.5s ease-out}
+  @keyframes flash{0%{box-shadow:0 0 0 4px rgba(28,105,212,.45)}100%{box-shadow:0 1px 3px rgba(18,33,46,.06)}}
+  .card.selected{box-shadow:0 0 0 3px rgba(28,105,212,.5), 0 2px 8px rgba(18,33,46,.12)}
+
+  .say{
+    background:#f7fbff; border:1px dashed #bcd4ee; border-radius:7px;
+    padding:13px 15px; font-size:17px; line-height:1.66; color:#14304d;
+  }
+  .say p{margin:0 0 11px}
+  .say p:last-child{margin:0}
+  .note{font-size:13px; color:var(--mid); margin:9px 0 0}
+  .note b{color:var(--ink)}
+  .copy{
+    flex:0 0 auto; font-size:11px; padding:5px 10px; border-radius:5px;
+    border:1px solid var(--line); background:#f4f7fa; color:var(--mid); cursor:pointer;
+  }
+  .copy:hover{background:var(--blue); color:#fff; border-color:var(--blue)}
+  ul.tight{margin:9px 0 0; padding-left:20px; font-size:14.5px}
+  ul.tight li{margin:0 0 6px}
+  ol.tight{margin:9px 0 0; padding-left:22px; font-size:14.5px}
+  ol.tight li{margin:0 0 8px}
+  .chips{display:flex; flex-wrap:wrap; gap:9px; margin:4px 0 13px}
+  .chip{
+    border:1px solid var(--line); border-radius:8px; background:#fff; padding:10px 13px;
+    font-size:13.5px; flex:1 1 210px; min-width:190px;
+  }
+  .chip b{display:block; font-size:13.5px; margin-bottom:3px}
+  .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; vertical-align:middle}
+  .d-blue{background:var(--blue)} .d-green{background:var(--green)} .d-red{background:var(--red)}
+  .d-amber{background:var(--amber)} .d-grey{background:var(--grey)}
+  .card.warn{border-left-color:var(--amber)}
+  .card.stop{border-left-color:var(--red)}
+  .card.ok{border-left-color:var(--green)}
+  .card.bg{border-left-color:var(--purple)}
+  .beat{font-size:10.5px; text-transform:uppercase; letter-spacing:.9px; color:var(--blue); font-weight:700; margin:0 0 5px}
+  .swap{margin:0 0 11px; padding:11px 13px; border-radius:7px; background:#f9fbfd; border:1px solid var(--line)}
+  .swap:last-child{margin-bottom:0}
+  .swap .beat{margin-bottom:4px; color:var(--mid)}
+  .yes{color:#14304d; font-size:16.5px; line-height:1.6; margin:0}
+  .hidden{display:none !important}
+  footer{padding:0 26px 60px; font-size:12.5px; color:var(--mid)}
+
+  @media (max-width:980px){
+    .shell{flex-direction:column}
+    header{padding:11px 14px}
+    header .titles h1{font-size:16px}
+    header .titles p{display:none}
+    #topicsBtn{display:inline-block}
+    aside{
+      position:static; flex:1 1 auto; width:100%; max-height:none;
+      border-right:0; border-bottom:1px solid var(--line); display:none;
+    }
+    aside.open{display:block}
+    main{padding:16px 14px 100px}
+    .say{font-size:17.5px; padding:13px 14px}
+    .card{padding:14px 15px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="titles">
+    <h1>Arrival Board Answers</h1>
+    <p>Quick reference for PMs on a client call</p>
+  </div>
+  <div class="bar">
+    <input id="q" type="search" placeholder="Search: tiers, unavailable, student count, license, missing">
+    <span id="count"></span>
+    <button class="btn" onclick="clearQ()">Clear</button>
+    <button class="btn" id="topicsBtn" onclick="toggleTopics()">Topics</button>
+  </div>
+</header>
+
+<div class="shell">
+
+<aside id="side">
+  <div class="group">
+    <p class="glabel">Start here</p>
+    <a href="#triage">Triage: ask these 3 first</a>
+    <a href="#words">Six lines to have ready</a>
+    <a href="#split">Map is GPS, status is Tyler Drive</a>
+  </div>
+
+  <div class="group">
+    <p class="glabel">How it works</p>
+    <a href="#frame">What Arrival Board is for</a>
+    <a href="#sched">It runs off the schedule, not GPS</a>
+    <a href="#buffer">The time window, why boards look empty</a>
+    <a href="#rows">Same bus showing twice</a>
+    <a href="#hist">No history, today only</a>
+    <a href="#statuses">What each status color means</a>
+    <a href="#depart">Departures, afternoon only</a>
+    <a href="#four">What has to be true for a bus to show</a>
+  </div>
+
+  <div class="group">
+    <p class="glabel">Client questions</p>
+    <a href="#unav">"It's on the map but says Unavailable"</a>
+    <a href="#pm">"Mornings work, afternoons don't"</a>
+    <a href="#missing">"This bus isn't on the board at all"</a>
+    <a href="#tiers">"Why does our PM show as one run?"</a>
+    <a href="#count-blank">"Our student count is blank"</a>
+    <a href="#switch">"Do we have to switch our GPS?"</a>
+    <a href="#popup">"What's this ETA notification popup?"</a>
+    <a href="#gone">"The bus vanished off the board"</a>
+    <a href="#schools">"Why do I see fewer schools than she does?"</a>
+    <a href="#schoolnum">"What's the number by the school name?"</a>
+    <a href="#lic">"What do we need licensed?"</a>
+    <a href="#ver">"What version do the tablets need?"</a>
+    <a href="#parent">"The parent app shows an ETA, why not this?"</a>
+  </div>
+
+  <div class="group">
+    <p class="glabel">When to say no</p>
+    <a class="hot" href="#no">The four things to say no to</a>
+    <a class="hot" href="#push">If they push on third party GPS</a>
+  </div>
+
+  <div class="group">
+    <p class="glabel">Call prep</p>
+    <a href="#prep">What to confirm before the call</a>
+    <a href="#collect">What to collect before you hang up</a>
+    <a href="#stuck">If you do not know the answer</a>
+    <a href="#wrap">Wrap up the call</a>
+  </div>
+</aside>
+
+<main>
+
+<h2 class="sec">Start here</h2>
+
+<div class="card ok" id="triage">
+  <p class="beat">Ask these three and you will know which answer you need</p>
+  <h3>Triage: ask these 3 first</h3>
+  <ol class="tight">
+    <li><b>Is the bus showing on the map?</b> If yes, GPS is fine and this is a Tyler Drive or ETA question. If no, this is a schedule or assignment question.</li>
+    <li><b>Is it mornings, afternoons, or both?</b> Afternoons only points at when the driver starts the PM run, almost every time.</li>
+    <li><b>One bus, one school, or everything?</b> Everything points at licensing or user access, not at data.</li>
+  </ol>
+  <p class="note">Those three splits cover nearly every Arrival Board complaint. Get them before you start explaining anything.</p>
+</div>
+
+<div class="card stop" id="words">
+  <h3>Six lines to have ready <button class="copy">copy</button></h3>
+
+  <div class="swap">
+    <p class="beat">On what Tyler Drive is for</p>
+    <p class="yes">"Tyler Drive has to be the app the driver runs the run in. It does not have to be your GPS source."</p>
+  </div>
+
+  <div class="swap">
+    <p class="beat">On where the map position comes from</p>
+    <p class="yes">"The location on the map comes from whichever device reported most recently, from any GPS vendor."</p>
+  </div>
+
+  <div class="swap">
+    <p class="beat">On the Unavailable status</p>
+    <p class="yes">"Unavailable means no Tyler Drive ETA is coming in for that bus and run. The bus can still be moving on the map."</p>
+  </div>
+
+  <div class="swap">
+    <p class="beat">On tiers</p>
+    <p class="yes">"Arrival Board splits rows by run. There is no tier concept in it, so tiers show separately when each tier is its own run."</p>
+  </div>
+
+  <div class="swap">
+    <p class="beat">On anything they want added</p>
+    <p class="yes">"That is a fair ask. I will log it as an enhancement request. I am not going to give you a date today."</p>
+  </div>
+
+  <div class="swap">
+    <p class="beat">On what to call the system</p>
+    <p class="yes">"Student Transportation."</p>
+  </div>
+</div>
+
+<div class="card ok" id="split">
+  <p class="beat">Read as written, this is the load bearing one</p>
+  <h3>Map is GPS, status is Tyler Drive <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>The dot on the map is GPS, and it is any GPS. Whatever vendor you have, whichever device reported most recently is where we draw the bus. So the map side just works.</p>
+    <p>The early and late part is different. That comes from Tyler Drive, from the driver actually running the run in the app. Nothing else produces it. So if a bus is moving on the map but the status says Unavailable, that is not a GPS problem, that is a Tyler Drive problem.</p>
+  </div>
+  <p class="note">Say this early and most of the rest of the call gets easier. Getting it backwards is what generates the tickets.</p>
+</div>
+
+<h2 class="sec">How it works</h2>
+
+<div class="card" id="frame">
+  <p class="beat">Good opener</p>
+  <h3>What Arrival Board is for <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>So the way I would frame Arrival Board is this. It answers one question for the front office. Is the bus going to be here when it is supposed to be. That is it. It is not a routing tool and it is not a dispatch tool. It is a live picture of what is about to happen at your school in the next half hour.</p>
+    <p>Two things feed it. Where the bus is on the map, and whether it is running early or late. Those two come from different places, and almost every question people have about Arrival Board comes down to that split. So let me get that out of the way first.</p>
+  </div>
+</div>
+
+<div class="card" id="sched">
+  <h3>It runs off the schedule, not GPS <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>Arrival Board does not go looking for buses. It starts from your schedule. It asks which runs have a stop at this school today, in this time window, and that is the list. Then GPS moves the ones that are already on the list.</p>
+    <p>Which is why a bus you can see on your AVL map can be missing from Arrival Board completely. The GPS is fine. The bus just is not on the schedule for that school right now.</p>
+  </div>
+</div>
+
+<div class="card" id="buffer">
+  <h3>The time window, why boards look empty <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>There is a buffer setting, the School Stop Time Buffer, and it decides how long before and after the scheduled time a bus shows up. It is the same amount on both sides. Thirty minutes out of the box, and you can set it to fifteen, thirty, forty five, or sixty.</p>
+    <p>So if you are looking at a board that seems too quiet, the first thing I would do is push that to sixty and look again. A fair amount of the time that is the whole answer.</p>
+  </div>
+  <p class="note">Set per user in User Preferences. The vehicle count beside the school name moves with it.</p>
+</div>
+
+<div class="card" id="rows">
+  <h3>Same bus showing twice <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>A row is a bus and a run together, not just a bus. So if the same bus does two runs inside the window you will see it twice. Once showing Arrived on the first run, and once showing the live status of the second. That is working as designed, it is not a duplicate.</p>
+  </div>
+  <p class="note">Same mechanic as the tier answer, just asked a different way.</p>
+</div>
+
+<div class="card" id="hist">
+  <h3>No history, today only <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>One thing to know going in. Arrival Board does not keep history. Everything you are looking at is today, live. The performance numbers recalculate through the day and then they are gone. If you want yesterday, or a trend, that is reporting, not Arrival Board.</p>
+  </div>
+</div>
+
+<h3 id="statuses" style="font-size:15px; color:var(--navy); margin:20px 0 6px; scroll-margin-top:80px">What each status color means</h3>
+<p class="sub" style="margin-top:0">Thresholds sit about a minute and a half either side of the planned school stop time.</p>
+
+<div class="chips">
+  <div class="chip"><b><span class="dot d-blue"></span>Early</b>Ahead by more than about a minute and a half. Shows the minutes ahead.</div>
+  <div class="chip"><b><span class="dot d-green"></span>On Time</b>Within about a minute and a half of the planned time.</div>
+  <div class="chip"><b><span class="dot d-red"></span>Late</b>Behind by more than about a minute and a half. Shows the minutes behind.</div>
+  <div class="chip"><b><span class="dot d-amber"></span>Arrived</b>Driver serviced the school stop in Tyler Drive inside the school zone. Holds five minutes.</div>
+  <div class="chip"><b><span class="dot d-amber"></span>Departed</b>Bus left the school zone with students on. Also five minutes.</div>
+  <div class="chip"><b><span class="dot d-grey"></span>Unavailable</b>No Tyler Drive ETA for that bus and run. Bus can still be moving on the map.</div>
+</div>
+
+<div class="card" id="depart">
+  <h3>Departures, afternoon only <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>Departures only fill in for the afternoon, and only where the school stop is a pickup, so more students getting on than off. The bus also has to show Arrived first before it can show as departing. And the departure clock starts when it leaves the school zone, so it sits on Pending Departure the whole time it is loading.</p>
+  </div>
+  <p class="note">Planned departing time is the school stop time plus the loading allowances, so it reads a few minutes after the bell. Expected, not a data problem. If a departure time looks wrong, this is usually why.</p>
+</div>
+
+<div class="card" id="four">
+  <h3>What has to be true for a bus to show <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>For a bus to land on the board, four things have to line up. The run has to be showing in Rollout for today. The run has to have a vehicle on it, and in the afternoon a driver too. The run has to have a stop at that school with students on it, so a load count above zero. And the current time has to be inside that buffer window around the stop time.</p>
+    <p>Miss any one of those four and the bus simply is not there. It is almost always one of those four.</p>
+  </div>
+  <p class="note"><b>The load count is the one people miss.</b> A run can pass through a school with no students assigned to that school stop, and it will never appear. Check that before anybody blames GPS.</p>
+</div>
+
+<h2 class="sec">Client questions</h2>
+
+<div class="card" id="unav">
+  <h3>"It's on the map but says Unavailable" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>That combination actually tells us a lot. On the map means GPS is fine. Unavailable means no Tyler Drive ETA for that run.</p>
+    <p>So I would check three things. Is the driver starting the run in the app, and starting it before they reach the school. Are the ETA notifications turned on in the Tyler Drive setup. And is the tablet on a current enough version. Those three cover it nearly every time.</p>
+  </div>
+</div>
+
+<div class="card warn" id="pm">
+  <p class="beat">The most common Arrival Board complaint there is</p>
+  <h3>"Mornings work, afternoons don't" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>This one is really common, and it is almost always about when the driver starts the run, not about the equipment.</p>
+    <p>Tyler Drive only sends the approach ETAs if the run is started before the bus gets near the school. In the morning that happens naturally, because drivers start the run out on the route while they are picking up, so everything works. In the afternoon a lot of drivers do not start the PM run until they are already parked at the school. By then the bus is inside the school zone, and no approach ETAs ever get sent. So the board has nothing to show and it says Unavailable.</p>
+    <p>The fix is the habit, not the setup. Start the PM run before you pull onto campus and the statuses show up.</p>
+  </div>
+  <p class="note">Written up in section 10 of the user guide if they want it on paper. <b>Do not assume they have no tablets just because mornings work.</b> Mornings working is proof the tablets are there.</p>
+</div>
+
+<div class="card" id="missing">
+  <h3>"This bus isn't on the board at all" <button class="copy">copy</button></h3>
+  <p class="note" style="margin:0 0 9px">Different from Unavailable. Nothing on the board points at the schedule, not GPS. Walk them down this list.</p>
+  <ul class="tight">
+    <li>Right school selected, and the user has access to it.</li>
+    <li>Push the buffer to sixty minutes and look again.</li>
+    <li>A red banner on the map view means no runs are assigned to that school today. Stop there and work the schedule.</li>
+    <li>Run effective today, and today is a school day on the calendar.</li>
+    <li>Run actually has a stop at that school, with students on that stop.</li>
+    <li>Today's vehicle assignment in Rollout. No vehicle, or a substitute went out, and the bus they are watching will not be listed.</li>
+    <li>The bus on the AVL map is the same vehicle record that is on the run, not a duplicate record holding the GPS device.</li>
+    <li>If every bus is missing and not just one, check Advanced AVL, read access on Arrival Board for the group, and at least one school assigned to that group.</li>
+  </ul>
+</div>
+
+<div class="card warn" id="tiers">
+  <h3>"Why does our PM show as one run?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>You have got that right. Arrival Board splits rows by run, not by tier. There is no tier concept in it at all. So tiers only show up separately when each tier is its own run.</p>
+    <p>If your morning tiers are built that way, each one its own run, they break out. When the afternoon ones are chained together into a single run, the afternoon reads as one continuous thing.</p>
+    <p>If you want the PM to break out the same way, those runs would need to be split the way the AM ones are. That is a routing change on your side, not a setting in Arrival Board.</p>
+  </div>
+  <p class="note">Verified in the product. Do not offer a change and do not call it a limitation. It is a modeling difference, and the fix is in their hands.</p>
+</div>
+
+<div class="card" id="count-blank">
+  <h3>"Our student count is blank" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>So that one is a real limit and I want to be straight with you about it. Student count only comes through when Tyler Drive is the GPS source on the vehicle.</p>
+    <p>Here is why. The count rides along attached to the position message, it is not its own separate feed. The system keeps the most recent position for each bus from whichever device reported last. Tyler Drive puts a count on its messages and a third party unit does not. And a third party unit reports more often than the tablet does, so the newest message is almost always the one with no count on it, and the column blanks out.</p>
+    <p>So with a third party GPS as the source, that column is not going to fill in. Everything else works. That one column does not.</p>
+  </div>
+  <p class="note">Also needs Student Ridership turned on in the Tyler Drive setup, and the count only updates once the bus leaves the stop. This is the one place where Tyler Drive really does need to be the GPS source, so it is the one place you can say that.</p>
+</div>
+
+<div class="card" id="switch">
+  <h3>"Do we have to switch our GPS?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>No, and I want to be clear on that, because it is the most common misread of this product. Keep the GPS you have. The map is happy with any vendor.</p>
+    <p>What you do need is Tyler Drive on the buses with ETAs enabled, and drivers running their runs in it. That is what produces the early and late part. The only thing you give up by keeping your current GPS as the source is the student count column.</p>
+  </div>
+</div>
+
+<div class="card" id="popup">
+  <h3>"What's this ETA notification popup?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>That is Arrival Board telling you a switch is off upstream. It is in the Tyler Drive setup inside Student Transportation, under Navigation, and there is a setting there for sending stop ETAs. Turn that on and the popup stops and the statuses start coming.</p>
+    <p>There is a similar popup if the Tyler Drive piece is not licensed at all. Either way it is a setup item, not a bug.</p>
+  </div>
+</div>
+
+<div class="card" id="gone">
+  <h3>"The bus vanished off the board" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>Probably nothing wrong. Once a bus shows Arrived or Departed it holds on the board for five minutes and then it drops off, because it is done. And anything that falls outside the time window drops off too.</p>
+  </div>
+</div>
+
+<div class="card" id="schools">
+  <h3>"Why do I see fewer schools than she does?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>That is on purpose. Arrival Board only shows the schools a person is already allowed to see in Student Transportation. So a front office person sees their building and a director sees everything. If somebody is missing a school, that is their user group, not Arrival Board.</p>
+  </div>
+</div>
+
+<div class="card" id="schoolnum">
+  <h3>"What's the number by the school name?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>That is how many buses are in the window for that school right now. So it moves through the day, and it also moves if you change your buffer setting. It is not a total bus count for the school.</p>
+  </div>
+</div>
+
+<div class="card" id="lic">
+  <h3>"What do we need licensed?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>Arrival Board needs Advanced AVL to work properly. Quick way to check without digging, go into Advanced Routing and look for the School Arrival and Departure Report. If you can see that report, you have got it.</p>
+    <p>Beyond that, people need read access to Arrival Board on their user group, and that group needs at least one school assigned to it.</p>
+  </div>
+  <p class="note">If the Arrival Board option is not in their menu at all, it can take about a day to appear after access is granted.</p>
+</div>
+
+<div class="card" id="ver">
+  <h3>"What version do the tablets need?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>Tyler Drive needs to be on 2025.7.12 at a minimum for Arrival Board to work at all, and 2025.7.16 to get everything. Drivers can check the version right on the Tyler Drive home screen.</p>
+    <p>If some buses look fine and others never report, an old tablet version is worth ruling out early.</p>
+  </div>
+</div>
+
+<div class="card" id="parent">
+  <h3>"The parent app shows an ETA, why not this?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>Fair question, and they do work differently. My Ride K-12 works out its own estimate for a family watching one bus. Arrival Board reports the ETA that Tyler Drive produces for the run against the schedule, because the front office is watching every bus against the bell.</p>
+    <p>So the two are not built the same way, and the school side needs the driver running the run in Tyler Drive.</p>
+  </div>
+  <p class="note"><b>Internal context, use carefully.</b> The parent app does calculate an ETA from third party GPS, which is why this comparison comes up. Do not present that as something Arrival Board can turn on, and do not raise it unless they do.</p>
+</div>
+
+<h2 class="sec">When to say no</h2>
+
+<div class="card stop" id="no">
+  <h3>The four things to say no to</h3>
+  <ul class="tight">
+    <li><b>Tiers.</b> Not a concept in Arrival Board. Rows split by run. Split the runs if they want tiers.</li>
+    <li><b>History.</b> Today only. No trend view, no yesterday.</li>
+    <li><b>Student count with third party GPS.</b> Will not fill in. Be direct.</li>
+    <li><b>Statuses or ETAs from third party GPS.</b> Tyler Drive only. No configuration changes this. Enhancement request, no date.</li>
+  </ul>
+  <p class="note">Say the limit once, plainly, then move straight to what does work. Do not soften it into a maybe, because a maybe comes back as a ticket.</p>
+</div>
+
+<div class="card stop" id="push">
+  <h3>If they push on third party GPS <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>I do not want to leave you with the wrong impression here. There is no path today where a third party GPS feed produces a status or an ETA in Arrival Board. It is not a setting we have not found. The product only builds those from Tyler Drive.</p>
+    <p>Your location, your map, the last update time, all of that runs off your existing GPS feed and it is fine. The timing intelligence is the part that needs the app.</p>
+  </div>
+  <p class="note">Fair to add that you will log it as an enhancement request. Do not give a date either way.</p>
+</div>
+
+<h2 class="sec">Call prep</h2>
+
+<div class="card bg" id="prep">
+  <h3>What to confirm before the call</h3>
+  <ul class="tight">
+    <li>Which GPS vendor they use, by name.</li>
+    <li>Whether Tyler Drive is on the buses, and roughly what version.</li>
+    <li>Whether the issue is one school or district wide.</li>
+    <li>Whether it is mornings, afternoons, or both.</li>
+    <li>Who is on the call. If district staff are on, keep internal platform and tooling names out of the whole call.</li>
+  </ul>
+</div>
+
+<div class="card bg" id="collect">
+  <h3>What to collect before you hang up</h3>
+  <ul class="tight">
+    <li>The school.</li>
+    <li>The bus number and the run name.</li>
+    <li>Roughly what time they were looking.</li>
+  </ul>
+  <p class="note">Without those three, nothing is diagnosable after the call. Ask for them even when you think you already know the answer.</p>
+</div>
+
+<div class="card" id="stuck">
+  <h3>If you do not know the answer <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>Good question, and I would rather give you the right answer than a fast one. Let me check that and come back to you today.</p>
+  </div>
+</div>
+
+<div class="card ok" id="wrap">
+  <h3>Wrap up the call <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>So to pull it together. Keep your GPS where it is, that side is fine. The thing that unlocks the statuses is drivers starting the run in Tyler Drive before they get to the school.</p>
+    <p>I will follow up on anything I owe you. If something looks off in the meantime, grab me the school, the bus and the run, and about what time, and I can chase it down.</p>
+  </div>
+</div>
+
+<footer>
+  Internal reference for Tyler product and project teams. Not for client distribution.<br>
+  Sources: Arrival Board user guide and overview, the Arrival Board ETA and troubleshooting pages, and verified product behavior. Status thresholds are about a minute and a half either side of the planned school stop time. Arrived and Departed hold five minutes. Buffer default is thirty minutes. Reviewed 2026-09-01.
+</footer>
+
+</main>
+</div>
+
+<script>
+  var q = document.getElementById('q');
+  var counter = document.getElementById('count');
+  var side = document.getElementById('side');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card, .chip'));
+  var subs = Array.prototype.slice.call(document.querySelectorAll('.sub'));
+  var secs = Array.prototype.slice.call(document.querySelectorAll('h2.sec'));
+  var chipWrap = Array.prototype.slice.call(document.querySelectorAll('.chips'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('aside a'));
+
+  function applyFilter(){
+    var t = q.value.trim().toLowerCase();
+    var hits = 0;
+
+    cards.forEach(function(c){
+      var miss = t.length > 0 && c.textContent.toLowerCase().indexOf(t) === -1;
+      c.classList.toggle('hidden', miss);
+      if(!miss && c.classList.contains('card')) hits++;
+    });
+
+    subs.forEach(function(s){ s.classList.toggle('hidden', t.length > 0); });
+
+    chipWrap.forEach(function(w){
+      var any = Array.prototype.slice.call(w.querySelectorAll('.chip'))
+        .some(function(c){ return !c.classList.contains('hidden'); });
+      w.classList.toggle('hidden', !any);
+      var head = document.getElementById('statuses');
+      if(head) head.classList.toggle('hidden', !any);
+    });
+
+    secs.forEach(function(h){
+      var any = false;
+      var n = h.nextElementSibling;
+      while(n && n.tagName !== 'H2'){
+        if((n.classList.contains('card') || n.classList.contains('chips') || n.tagName === 'H3')
+           && !n.classList.contains('hidden')) any = true;
+        n = n.nextElementSibling;
+      }
+      h.classList.toggle('hidden', t.length > 0 && !any);
+    });
+
+    links.forEach(function(a){
+      var target = document.querySelector(a.getAttribute('href'));
+      var gone = target && target.classList.contains('hidden');
+      a.classList.toggle('hidden', t.length > 0 && gone);
+    });
+
+    counter.textContent = t.length > 0 ? (hits + (hits === 1 ? ' match' : ' matches')) : '';
+  }
+
+  q.addEventListener('input', applyFilter);
+  function clearQ(){ q.value = ''; applyFilter(); q.focus(); }
+  function toggleTopics(){ side.classList.toggle('open'); }
+
+  function goTo(a){
+    var target = document.querySelector(a.getAttribute('href'));
+    if(!target) return;
+    if(target.classList.contains('hidden')){ q.value = ''; applyFilter(); }
+    links.forEach(function(x){ x.classList.remove('on'); });
+    a.classList.add('on');
+    cards.forEach(function(c){ c.classList.remove('selected'); });
+    target.classList.add('selected');
+    target.classList.remove('flash');
+    void target.offsetWidth;
+    target.classList.add('flash');
+    if(window.innerWidth <= 980) side.classList.remove('open');
+    target.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  links.forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); goTo(a); });
+  });
+
+  q.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      var first = links.filter(function(a){ return !a.classList.contains('hidden'); })[0];
+      if(first) goTo(first);
+    }
+    if(e.key === 'Escape'){ clearQ(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === '/' && document.activeElement !== q){ e.preventDefault(); q.focus(); }
+  });
+</script>
+</body>
+</html>
