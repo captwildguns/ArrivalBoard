@@ -193,6 +193,7 @@
     <a href="#gone">"The bus vanished off the board"</a>
     <a href="#schools">"Why do I see fewer schools than she does?"</a>
     <a href="#schoolnum">"What's the number by the school name?"</a>
+    <a href="#waypoints">"Do waypoints affect Arrival Board?"</a>
     <a href="#lic">"What do we need licensed?"</a>
     <a href="#ver">"What version do the tablets need?"</a>
     <a href="#parent">"The parent app shows an ETA, why not this?"</a>
@@ -357,7 +358,7 @@
     <li>Push the buffer to sixty minutes and look again.</li>
     <li>A red banner on the map view means no runs are assigned to that school today. Stop there and work the schedule.</li>
     <li>Run effective today, and today is a school day on the calendar.</li>
-    <li>Run actually has a stop at that school, with students on that stop.</li>
+    <li>Run actually has a stop at that school, with students on that stop. A waypoint at the school does not count, and the path will still look right on the map.</li>
     <li>Today's vehicle assignment in Rollout. No vehicle, or a substitute went out, and the bus they are watching will not be listed.</li>
     <li>The bus on the AVL map is the same vehicle record that is on the run, not a duplicate record holding the GPS device.</li>
     <li>If every bus is missing and not just one, check Advanced AVL, read access on Arrival Board for the group, and at least one school assigned to that group.</li>
@@ -419,6 +420,16 @@
   <div class="say">
     <p>That is how many buses are in the window for that school right now. So it moves through the day, and it also moves if you change your buffer setting. It is not a total bus count for the school.</p>
   </div>
+</div>
+
+<div class="card" id="waypoints">
+  <h3>"Do waypoints affect Arrival Board?" <button class="copy">copy</button></h3>
+  <div class="say">
+    <p>Not directly, no. A waypoint is only there to shape the path the bus takes. It holds no students and it has no scheduled time, so Arrival Board never treats it as a stop. It will not show up as a row, it never gets a status, and it does not trigger an Arrived or a Departed. The Arrival Board map only draws the buses and the schools anyway, not the run path, so you will not see waypoints there at all.</p>
+    <p>Where they do matter is timing. A waypoint changes the path, and changing the path changes travel time, which changes the planned time at the school. So any time you add or pull waypoints, the run needs to be recalculated. If it is not, Arrival Board is comparing the live estimate against an old planned time, and buses read early or late when they are actually running fine.</p>
+  </div>
+  <p class="note"><b>Two things to watch for.</b> First, a waypoint is not a school stop. If somebody drops a waypoint at the school instead of building a real school stop with students on it, the bus will never appear on that school's board, even though the path looks right on the map. Second, runs brought over from another system usually arrive carrying a lot of waypoints, which locks the path into whatever shape came across. They can be removed in bulk or hidden with a layer toggle.</p>
+  <p class="note">If a district has been doing routing work and suddenly everything reads late, ask whether the runs were recalculated. That is the fastest thing to rule out.</p>
 </div>
 
 <div class="card" id="lic">
